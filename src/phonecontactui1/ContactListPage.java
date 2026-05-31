@@ -2,6 +2,7 @@
 package PhoneContactUI1;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,48 +25,51 @@ public class ContactListPage extends Application {
 
         TextField search = new TextField();
         search.setPromptText("Search Contacts");
-         
-        HBox buttonRow = new HBox(10);
+        search.setStyle("-fx-background-radius: 10;" +"-fx-border-radius: 20;" +
+                          "-fx-padding: 8 15 8 15;" +"-fx-font-size: 15px;");
 
-        Button allBtn = new Button("All");
         Button addBtn = new Button("Add Contact");
+        addBtn.setStyle("-fx-background-radius: 10;" +"-fx-padding: 6 10 6 10;" +"-fx-font-size: 15px;");
 
-        buttonRow.getChildren().addAll(allBtn, addBtn);
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name");
+        nameField.setStyle("-fx-background-radius: 8;" +"-fx-border-radius: 8;");
 
-        TextField name = new TextField();
-        name.setPromptText("Name");
+        TextField numberField = new TextField();
+        numberField.setPromptText("Number");
+        numberField.setStyle("-fx-background-radius: 8;" + "-fx-border-radius: 8;");
 
-        TextField number = new TextField();
-        number.setPromptText("Number");
-
-        inputBox = new HBox(10, name, number);
+        inputBox = new HBox(10, nameField, numberField);
         inputBox.setVisible(false);
 
-        // saved contacts
         addContact("Prapti", "01711111111");
         addContact("Mariya", "01822222222");
-        addContact("Esha", "01333333333");
-        addContact("Sifat", "01933333323");
+        addContact("Faria", "01333333333");
+        addContact("Mashrafee", "01933333323");
 
-        // show the box where i can add name and number
         addBtn.setOnAction(e -> {
+
             if (!layout.getChildren().contains(inputBox)) {
                 layout.getChildren().add(inputBox);
             }
-            inputBox.setVisible(true);//the input box will pop
-      
-            if (!name.getText().isEmpty() && !number.getText().isEmpty()) {
 
-                addContact(name.getText(), number.getText());
+            inputBox.setVisible(true);
 
-                name.clear();
-                number.clear();
+            String name = nameField.getText().trim();
+            String number = numberField.getText().trim();
 
-                inputBox.setVisible(false);//afyrt xcontact saving the box will vanish
+            if (!name.isEmpty() && !number.isEmpty()) {
+
+                addContact(name, number);
+
+                nameField.clear();
+                numberField.clear();
+
+                inputBox.setVisible(false);
             }
         });
 
-        layout.getChildren().addAll(search, buttonRow, contactList);
+        layout.getChildren().addAll(search, addBtn, contactList);
 
         Scene scene = new Scene(layout, 400, 600);
         primaryStage.setScene(scene);
@@ -75,20 +79,29 @@ public class ContactListPage extends Application {
 
     void addContact(String name, String number) {
 
-        HBox box = new HBox(15);
-        box.setAlignment(Pos.CENTER_LEFT);
+        HBox b = new HBox(15);
+        b.setAlignment(Pos.CENTER_LEFT);
+        b.setPadding(new Insets(12));
+
+b.setStyle(
+    "-fx-border-color: #7A869A;" +
+    "-fx-border-width: 1;" +
+    "-fx-border-radius: 10;" +
+    "-fx-padding: 10;"
+);
 
         VBox info = new VBox(5);
-        info.getChildren().addAll(new Label(name), new Label(number));
+        info.getChildren().addAll(new Label(name),new Label(number));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button call = new Button("Call");
+        Button callBtn = new Button("Call");
+        callBtn.setStyle("-fx-background-radius: 10;" +"-fx-padding: 6 10 6 10;" +"-fx-font-size: 15px;");
 
-        box.getChildren().addAll(info, spacer, call);
+        b.getChildren().addAll(info, spacer, callBtn);
 
-        contactList.getChildren().add(box);
+        contactList.getChildren().add(b);
     }
 
     public static void main(String[] args) {
