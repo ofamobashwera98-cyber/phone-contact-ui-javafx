@@ -4,12 +4,17 @@
  */
 package editcontact;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -17,28 +22,47 @@ import javafx.stage.Stage;
  * @author User
  */
 public class Editcontact extends Application {
-    
-    
+        TextField nameField;
+        TextField phoneField;
+        TextField emailField;
+        ImageView profileImageView;
+        
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+        profileImageView = new ImageView();
+
+        profileImageView.setFitWidth(120);
+        profileImageView.setFitHeight(120);
+        
+        Image defaultImage = new Image("file:profile.png");
+        profileImageView.setImage(defaultImage);
+        Button photoBtn = new Button("Change Photo");
+
+        photoBtn.setOnAction(e -> {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select Profile Photo");
+
+            File file = fileChooser.showOpenDialog(primaryStage);
+
+            if (file != null) {
+                Image image = new Image(file.toURI().toString());
+                profileImageView.setImage(image);
             }
         });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        nameField = new TextField();
+        nameField.setPromptText("Enter Name");
+
+        phoneField = new TextField();
+        phoneField.setPromptText("Enter Phone");
+
+        emailField = new TextField();
+        emailField.setPromptText("Enter Email");
+
+        Button updateBtn = new Button("Update");
+        Button deleteBtn = new Button("Delete");
+
     }
 
     /**
