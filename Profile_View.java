@@ -1,9 +1,14 @@
 package profile_view;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -13,7 +18,7 @@ public class Profile_View extends Application {
     public void start(Stage primaryStage) {
         
     }
-
+    
     public static void profile(String name, String phone, String email) {
 
         // profile window creation
@@ -35,9 +40,16 @@ public class Profile_View extends Application {
         );
         //button for edit contact
         Button editButton = new Button("Edit");
-        editButton.setStyle ( "-fx-font-size: 14px;"
-        );
-
+        
+        HBox topBar = new HBox();
+        topBar.setAlignment(Pos.TOP_RIGHT);
+        topBar.getChildren().add(editButton);
+        
+        //profile picture 
+        Image image = new Image("file:profile.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
 
         // Layout
         VBox layout = new VBox(10);        
@@ -46,10 +58,10 @@ public class Profile_View extends Application {
                 "-fx-alignment: center;"
         );
 
-        layout.getChildren().addAll(title,
+        layout.getChildren().addAll(topBar,imageView,title,
                 nameLabel,               
                 phoneLabel,
-                emailLabel,editButton );
+                emailLabel);
 
         Scene scene = new Scene(layout, 300, 200);
         profileStage.setTitle("Profile View");
