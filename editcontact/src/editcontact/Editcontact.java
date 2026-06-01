@@ -8,12 +8,16 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -62,12 +66,47 @@ public class Editcontact extends Application {
 
         Button updateBtn = new Button("Update");
         Button deleteBtn = new Button("Delete");
+        updateBtn.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Updated");
+            alert.setHeaderText(null);
+            alert.setContentText("Contact Updated Successfully!");
+            alert.showAndWait();
+        });
+        deleteBtn.setOnAction(e -> {
+            nameField.clear();
+            phoneField.clear();
+            emailField.clear();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Contact Deleted!");
+            alert.showAndWait();
+        });
+         VBox root = new VBox(15);
+         root.setAlignment(Pos.CENTER);
+
+         root.getChildren().addAll(
+                new Label("Edit Contact"),
+                profileImageView,
+                photoBtn,
+                new Label("Name"),
+                nameField,
+                new Label("Phone"),
+                phoneField,
+                new Label("Email"),
+                emailField,
+                updateBtn,
+                deleteBtn
+         );
+        Scene scene = new Scene(root, 400, 650);
+        primaryStage.setTitle("Edit Contact");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
